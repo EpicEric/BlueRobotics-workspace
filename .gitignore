@@ -1,0 +1,9 @@
+*
+!/.tack/
+!/.tack/**
+!/nix/
+!/nix/**
+!.envrc
+!.gitignore
+!default.nix
+!shell.nix

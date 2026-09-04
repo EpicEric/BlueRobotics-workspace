@@ -1,0 +1,10 @@
+{
+  "nixpkgs": {
+    "type": "github",
+    "owner": "NixOS",
+    "repo": "nixpkgs",
+    "rev": "5545adfad2e98de106a5544ca7067e03010410bd",
+    "narHash": "sha256-JIHQ6xNAN53cdo6zZ72LRcQ9lpvnABCnNE4hldJ5uZU=",
+    "lastModified": 1788400875
+  }
+}
