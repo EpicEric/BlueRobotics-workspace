@@ -8,8 +8,11 @@ pkgs.mkShell {
     pkgs.bun
     pkgs.cargo
     pkgs.cargo-tauri
+    pkgs.lsof
+    pkgs.parallel
     pkgs.pkg-config
     pkgs.rustc
+    pkgs.shellcheck
     pkgs.uv
     pkgs.wrapGAppsHook4
   ];
