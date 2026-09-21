@@ -19,7 +19,9 @@ rustPlatform.buildRustPackage {
 
   src = lib.fileset.toSource {
     root = ../../ping-viewer-next;
-    fileset = lib.fileset.gitTracked ../../ping-viewer-next;
+    fileset = lib.fileset.union (lib.fileset.gitTracked ../../ping-viewer-next) (
+      lib.fileset.maybeMissing ../../ping-viewer-next/.git
+    );
   };
 
   cargoLock.lockFile = ../../ping-viewer-next/Cargo.lock;
