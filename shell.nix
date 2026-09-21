@@ -8,6 +8,7 @@ pkgs.mkShell {
     pkgs.bun
     pkgs.cargo
     pkgs.cargo-tauri
+    pkgs.clippy
     pkgs.lsof
     pkgs.parallel
     pkgs.pkg-config
