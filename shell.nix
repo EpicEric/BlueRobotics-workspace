@@ -4,12 +4,14 @@
   pkgs ? import inputs.nixpkgs { inherit system; },
 }:
 pkgs.mkShell {
-  nativeBuildInputs = [
+  packages = [
     pkgs.bun
     pkgs.cargo
     pkgs.cargo-tauri
     pkgs.clippy
     pkgs.lsof
+    pkgs.nodejs_24
+    (import inputs.now { inherit system; })
     pkgs.parallel
     pkgs.pkg-config
     pkgs.rustc

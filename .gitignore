@@ -6,4 +6,7 @@
 !.envrc
 !.gitignore
 !default.nix
+!now.nix
 !shell.nix
+!LICENSE
+!README.md
