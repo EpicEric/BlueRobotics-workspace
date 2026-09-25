@@ -1,3 +1,7 @@
+{ runner, ... }:
+let
+  stringOrPlaceholder = original: placeholder': if (original == "") then placeholder' else original;
+in
 {
   jobs = {
     setup-blueos = { pkgs, ... }: {
@@ -70,6 +74,27 @@
                 npm run build
               fi
             fi
+          '';
+        }
+      ];
+    };
+
+    push-ping-viewer-next = { pkgs, ... }: {
+      steps = [
+        {
+          path = [
+            pkgs.nix
+            pkgs.openssh
+          ];
+          env = {
+            BLUEOS_USER = stringOrPlaceholder (runner.var "BLUEOS_USER") "pi";
+            BLUEOS_HOST = runner.secret "BLUEOS_HOST";
+            BLUEOS_ARCH = stringOrPlaceholder (runner.var "BLUEOS_ARCH") "armv7l";
+            DOCKER_TAG = stringOrPlaceholder (runner.var "DOCKER_TAG") "dev";
+          };
+          run = ''
+            PVN_IMAGE=$(nix-build --no-out-link -A ping-viewer-next.docker-$BLUEOS_ARCH --argstr dockerTag $DOCKER_TAG)
+            ssh $BLUEOS_USER@$BLUEOS_HOST docker image load < $PVN_IMAGE
           '';
         }
       ];
