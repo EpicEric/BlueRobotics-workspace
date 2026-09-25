@@ -12,8 +12,9 @@
               printf "\033[1;33mwarning:\033[0m BlueOS/ already exists.\n"
             else
               git clone --recurse-submodules --shallow-submodules git@github.com:EpicEric/BlueOS.git
-              jj -R BlueOS git init
-              jj -R BlueOS git remote add upstream git@github.com:bluerobotics/BlueOS.git
+              cd BlueOS
+              jj git init
+              jj git remote add upstream git@github.com:bluerobotics/BlueOS.git
             fi
           '';
         }
@@ -68,6 +69,27 @@
                 npm ci
                 npm run build
               fi
+            fi
+          '';
+        }
+      ];
+    };
+
+    setup-cockpit = { pkgs, ... }: {
+      steps = [
+        {
+          path = [
+            pkgs.gitMinimal
+            pkgs.jujutsu
+          ];
+          run = ''
+            if [ -d "cockpit" ]; then
+              printf "\033[1;33mwarning:\033[0m cockpit/ already exists.\n"
+            else
+              git clone --recurse-submodules --shallow-submodules git@github.com:EpicEric/cockpit.git
+              cd cockpit
+              jj git init
+              jj git remote add upstream git@github.com:bluerobotics/cockpit.git
             fi
           '';
         }

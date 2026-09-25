@@ -18,6 +18,7 @@ pkgs.mkShell {
     pkgs.shellcheck
     pkgs.uv
     pkgs.wrapGAppsHook4
+    pkgs.yarn
   ];
 
   buildInputs = [
