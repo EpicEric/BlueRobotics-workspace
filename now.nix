@@ -1,7 +1,4 @@
 { runner, ... }:
-let
-  stringOrPlaceholder = original: placeholder': if (original == "") then placeholder' else original;
-in
 {
   jobs = {
     setup-blueos = { pkgs, ... }: {
@@ -18,7 +15,6 @@ in
               git clone --recurse-submodules --shallow-submodules git@github.com:EpicEric/BlueOS.git
               cd BlueOS
               jj git init
-              jj git remote add upstream git@github.com:bluerobotics/BlueOS.git
             fi
           '';
         }
@@ -52,7 +48,6 @@ in
               printf "\033[1;33mwarning:\033[0m ping-viewer-next/ already exists.\n"
             else
               jj git clone git@github.com:EpicEric/ping-viewer-next.git
-              jj -R ping-viewer-next git remote add upstream git@github.com:bluerobotics/ping-viewer-next.git
             fi
           '';
         }
@@ -86,15 +81,10 @@ in
             pkgs.nix
             pkgs.openssh
           ];
-          env = {
-            BLUEOS_USER = stringOrPlaceholder (runner.var "BLUEOS_USER") "pi";
-            BLUEOS_HOST = runner.secret "BLUEOS_HOST";
-            BLUEOS_ARCH = stringOrPlaceholder (runner.var "BLUEOS_ARCH") "armv7l";
-            DOCKER_TAG = stringOrPlaceholder (runner.var "DOCKER_TAG") "dev";
-          };
+          env.BLUEOS_HOST = runner.secret "BLUEOS_HOST";
           run = ''
-            PVN_IMAGE=$(nix-build --no-out-link -A ping-viewer-next.docker-$BLUEOS_ARCH --argstr dockerTag $DOCKER_TAG)
-            ssh $BLUEOS_USER@$BLUEOS_HOST docker image load < $PVN_IMAGE
+            PVN_IMAGE=$(nix-build --no-out-link -A ping-viewer-next.docker-''${BLUEOS_ARCH:-armv7l} --argstr dockerTag ''${DOCKER_TAG:-dev})
+            ssh ''${BLUEOS_USER:-pi}@$BLUEOS_HOST docker image load < $PVN_IMAGE
           '';
         }
       ];
@@ -114,7 +104,6 @@ in
               git clone --recurse-submodules --shallow-submodules git@github.com:EpicEric/cockpit.git
               cd cockpit
               jj git init
-              jj git remote add upstream git@github.com:bluerobotics/cockpit.git
             fi
           '';
         }
