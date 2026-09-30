@@ -9,10 +9,10 @@
   },
   "now": {
     "type": "git",
-    "url": "https://codeberg.org/now-runner/now.git",
+    "url": "https://codeberg.org/now-runner/now",
     "ref": "HEAD",
-    "rev": "5f38ff95854c52e81a030cabad7b03824982f663",
-    "narHash": "sha256-p7h6C+95rASkjI/azBETxRIeCjx98l5g03JKw5VPkz0=",
-    "lastModified": 1790596880
+    "rev": "7bbdba483ed19690e101cca2f4fa317823d631ba",
+    "narHash": "sha256-UnUDb5cphriNvQNMwexUqkfXA3/Wlf+ifHH8xOWR3M8=",
+    "lastModified": 1790766682
   }
 }
