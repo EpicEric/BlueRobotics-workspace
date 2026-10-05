@@ -6,6 +6,7 @@
   su-exec,
   dockerTools,
   dockerTag ? "nix",
+  dockerTool ? "buildLayeredImage",
 }:
 let
   entrypoint = writeShellApplication {
@@ -21,7 +22,7 @@ let
     '';
   };
 in
-dockerTools.buildLayeredImage {
+dockerTools.${dockerTool} {
   name = "docker.io/epiceric/blueos-ping-viewer-next";
   tag = dockerTag;
 

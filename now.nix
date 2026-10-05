@@ -83,8 +83,8 @@
           ];
           env.BLUEOS_HOST = runner.secret "BLUEOS_HOST";
           run = ''
-            PVN_IMAGE=$(nix-build --no-out-link -A ping-viewer-next.docker-''${BLUEOS_ARCH:-armv7l} --argstr dockerTag ''${DOCKER_TAG:-dev})
-            ssh ''${BLUEOS_USER:-pi}@$BLUEOS_HOST docker image load < $PVN_IMAGE
+            PVN_IMAGE=$(nix-build --no-out-link -A ping-viewer-next.docker-''${BLUEOS_ARCH:-armv7l} --argstr dockerTag ''${DOCKER_TAG:-dev} --argstr dockerTool streamLayeredImage)
+            $PVN_IMAGE | ssh ''${BLUEOS_USER:-pi}@$BLUEOS_HOST docker image load
           '';
         }
       ];

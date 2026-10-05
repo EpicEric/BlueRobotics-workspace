@@ -3,6 +3,7 @@
   inputs ? import ../../.tack,
   pkgs ? import inputs.nixpkgs { inherit system; },
   dockerTag ? "nix",
+  dockerTool ? "buildLayeredImage",
   ...
 }:
 let
@@ -24,7 +25,7 @@ let
       "backend-${suffix}" = backendCross;
       "docker-${suffix}" = pkgsCross.callPackage ./docker.nix {
         ping-viewer-next = backendCross;
-        inherit dockerTag;
+        inherit dockerTag dockerTool;
       };
     };
 in
