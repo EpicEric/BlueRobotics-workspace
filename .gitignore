@@ -7,6 +7,7 @@
 !.gitignore
 !default.nix
 !now.nix
+!packager-fhs.nix
 !shell.nix
 !LICENSE
 !README.md
