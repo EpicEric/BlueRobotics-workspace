@@ -1,7 +1,10 @@
 {
   lib,
+  stdenv,
+  buildPackages,
+  runCommandLocal,
+  craneLib,
   ping-viewer-next-frontend,
-  rustPlatform,
   perl,
   git,
   fetchFromGitHub,
@@ -13,9 +16,6 @@ let
     rev = "bad2532fca7721937e45f128c5345e6a8e6544c9"; # v0.16.2
     hash = "sha256-7JiM9wqN7NaBaGnBqnZRal9xRBAOuBVeHc/iYiW5NvM=";
   };
-in
-rustPlatform.buildRustPackage {
-  name = "ping-viewer-next";
 
   src = lib.fileset.toSource {
     root = ../../ping-viewer-next;
@@ -24,27 +24,55 @@ rustPlatform.buildRustPackage {
     );
   };
 
-  cargoLock.lockFile = ../../ping-viewer-next/Cargo.lock;
+  rustTarget = stdenv.hostPlatform.rust.rustcTarget;
+  rustTargetEnv = lib.toUpper (lib.replaceStrings [ "-" ] [ "_" ] rustTarget);
 
-  postPatch = ''
-    ln -s ${ping-viewer-next-frontend}/share/ping-viewer-next-frontend ping-viewer-next-frontend/dist
+  cargoVendorDir = craneLib.vendorCargoDeps {
+    inherit src;
+    overrideVendorCargoPackage =
+      pkg: drv:
+      if pkg.name == "mavlink" && pkg.version == "0.16.2" then
+        runCommandLocal "vendor-mavlink-0.16.2" { } ''
+          cp -R ${drv} $out
+          chmod -R u+w $out
+          rm -rf $out/mavlink
+          cp -R ${mavlinkDefinitions} $out/mavlink
+          chmod -R u+w $out/mavlink
+        ''
+      else
+        drv;
+  };
 
-    mavlinkCrate=$(find "$cargoDepsCopy" -maxdepth 2 -type d -name 'mavlink-0.16.2')
-    rm -rf "$mavlinkCrate/mavlink"
-    cp -R ${mavlinkDefinitions} "$mavlinkCrate/mavlink"
-  '';
+  commonArgs = {
+    inherit src cargoVendorDir;
+    strictDeps = true;
 
-  nativeBuildInputs = [
-    git
-    perl
-  ];
+    cargoExtraArgs = "--features embed-frontend,blueos-extension";
+    doCheck = false;
 
-  buildFeatures = [
-    "embed-frontend"
-    "blueos-extension"
-  ];
+    nativeBuildInputs = [
+      git
+      perl
+    ];
 
-  doCheck = false;
+    depsBuildBuild = [ buildPackages.stdenv.cc ];
 
-  meta.mainProgram = "ping-viewer-next";
-}
+    CARGO_BUILD_TARGET = rustTarget;
+    "CARGO_TARGET_${rustTargetEnv}_LINKER" = "${stdenv.cc.targetPrefix}cc";
+    HOST_CC = "${buildPackages.stdenv.cc.targetPrefix}cc";
+  };
+
+  cargoArtifacts = craneLib.buildDepsOnly commonArgs;
+in
+craneLib.buildPackage (
+  commonArgs
+  // {
+    inherit cargoArtifacts;
+
+    postPatch = ''
+      ln -s ${ping-viewer-next-frontend}/share/ping-viewer-next-frontend ping-viewer-next-frontend/dist
+    '';
+
+    meta.mainProgram = "ping-viewer-next";
+  }
+)

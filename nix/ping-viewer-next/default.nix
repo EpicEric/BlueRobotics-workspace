@@ -19,7 +19,22 @@ let
   mkCross =
     suffix: pkgsCross:
     let
-      backendCross = pkgsCross.callPackage ./backend.nix { ping-viewer-next-frontend = frontend; };
+      craneLib = (import inputs.crane { pkgs = pkgsCross; }).overrideToolchain (
+        _:
+        pkgsCross.pkgsBuildHost.symlinkJoin {
+          name = "rust-toolchain";
+          paths = with pkgsCross.pkgsBuildHost; [
+            cargo
+            rustc
+            clippy
+            rustfmt
+          ];
+        }
+      );
+      backendCross = pkgsCross.callPackage ./backend.nix {
+        inherit craneLib;
+        ping-viewer-next-frontend = frontend;
+      };
     in
     {
       "backend-${suffix}" = backendCross;

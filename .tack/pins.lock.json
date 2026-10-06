@@ -1,18 +1,26 @@
 {
+  "crane": {
+    "type": "github",
+    "owner": "ipetkov",
+    "repo": "crane",
+    "rev": "47b6b27ed9a3a9181415e4367d0c30ab2a0e0250",
+    "narHash": "sha256-THGtz65UGJU+sonZidRboyCMk+9DclpMF7pwL4uDV4M=",
+    "lastModified": 1790899423
+  },
   "nixpkgs": {
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "5545adfad2e98de106a5544ca7067e03010410bd",
-    "narHash": "sha256-JIHQ6xNAN53cdo6zZ72LRcQ9lpvnABCnNE4hldJ5uZU=",
-    "lastModified": 1788400875
+    "rev": "aa48d347080940b8a2b8d2f48228674e280a3514",
+    "narHash": "sha256-i8KuaINOYLvB2oQikGvtRmdZRxATRxsI9Yad2pp7dEA=",
+    "lastModified": 1791191277
   },
   "now": {
     "type": "git",
     "url": "https://codeberg.org/now-runner/now",
     "ref": "HEAD",
-    "rev": "7bbdba483ed19690e101cca2f4fa317823d631ba",
-    "narHash": "sha256-UnUDb5cphriNvQNMwexUqkfXA3/Wlf+ifHH8xOWR3M8=",
-    "lastModified": 1790766682
+    "rev": "a716cd6728f4167cbdf5ce2813771ef600f18e1b",
+    "narHash": "sha256-ohmYMxiCUT/kW3xdaE66Y9eUEZtVgu4399UF+d+eTOU=",
+    "lastModified": 1791152916
   }
 }
