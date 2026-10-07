@@ -116,6 +116,11 @@
           done
         '';
 
+        linuxdeploy = pkgs.fetchurl {
+          url = "https://github.com/tauri-apps/binary-releases/releases/download/linuxdeploy-07333c6/linuxdeploy-x86_64.AppImage";
+          sha256 = "0qjwgyqghlvd5164dv1b1dr59v9rsc8zxv79s1810bnifkidg8in";
+        };
+
         fhsEnv = pkgs.buildFHSEnv {
           name = "packager-fhs";
           targetPkgs = pkgs: [
@@ -196,6 +201,8 @@
             pkgs.patchelf
             pkgs.pkg-config
             pkgs.rustc
+            pkgs.wayland
+            pkgs.wayland.dev
             pkgs.webkitgtk_4_1
             pkgs.wget
             pkgs.xdg-utils
@@ -223,11 +230,20 @@
             ];
             run = ''
               cd ping-viewer-next
+
               # mksquashfs (via appimagetool) rejects SOURCE_DATE_EPOCH combined with its timestamp flags
               unset SOURCE_DATE_EPOCH
-              chmod -R u+w target/release/.cargo-packager
+
               # Drop stale AppDirs from previous attempts
-              rm -rf target/release/.cargo-packager/appimage/*.AppDir
+              chmod -R u+w target/release/.cargo-packager || true
+              rm -rf target/release/.cargo-packager/appimage/*.AppDir || true
+
+              # cargo-packager only downloads linuxdeploy if it's missing from its cache, so seed it with the
+              # newer build Tauri uses, whose excludelist keeps libwayland-client out of the AppImage
+              # TODO: Remove after <https://github.com/crabnebula-dev/cargo-packager/issues/493>
+              mkdir -p "$HOME/.cache/.cargo-packager/AppImage"
+              install -m 764 ${linuxdeploy} "$HOME/.cache/.cargo-packager/AppImage/linuxdeploy-x86_64.AppImage"
+
               cargo packager --packages ping-viewer-next-desktop --release --formats appimage
             '';
           }
