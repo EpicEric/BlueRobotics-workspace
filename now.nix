@@ -224,6 +224,7 @@
           {
             shell = fhsEnv;
             path = [
+              (pkgs.callPackage ./nix/cargo-generate-rpm/package.nix { })
               (pkgs.callPackage ./nix/cargo-packager.nix { })
               pkgs.cargo
               pkgs.rustc
@@ -245,6 +246,7 @@
               install -m 764 ${linuxdeploy} "$HOME/.cache/.cargo-packager/AppImage/linuxdeploy-x86_64.AppImage"
 
               cargo packager --packages ping-viewer-next-desktop --release --formats appimage
+              cargo generate-rpm -p ping-viewer-next-desktop
             '';
           }
         ];

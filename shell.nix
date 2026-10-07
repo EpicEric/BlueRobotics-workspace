@@ -7,6 +7,7 @@ pkgs.mkShell {
   packages = [
     pkgs.bun
     pkgs.cargo
+    (pkgs.callPackage ./nix/cargo-generate-rpm/package.nix { })
     pkgs.cargo-tauri
     pkgs.clippy
     pkgs.lsof
