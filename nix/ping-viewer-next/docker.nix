@@ -55,6 +55,7 @@ dockerTools.${dockerTool} {
           Binds = [
             "/var/logs/blueos/extensions/ping-viewer-next:/app/logs"
             "/usr/blueos/extensions/ping-viewer-next/recordings:/app/recordings"
+            "/usr/blueos/extensions/ping-viewer-next/settings:/app/settings"
           ];
         };
       };

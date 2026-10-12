@@ -19,8 +19,8 @@
     "type": "git",
     "url": "https://codeberg.org/now-runner/now",
     "ref": "HEAD",
-    "rev": "a716cd6728f4167cbdf5ce2813771ef600f18e1b",
-    "narHash": "sha256-ohmYMxiCUT/kW3xdaE66Y9eUEZtVgu4399UF+d+eTOU=",
-    "lastModified": 1791152916
+    "rev": "0a23bb7d7cd4873be9ebca28da5d9dd90f3444e7",
+    "narHash": "sha256-zc4Lm5q7TwU7qC5aKrkZLGJXYB9RSOEJu25y3Kv3ets=",
+    "lastModified": 1791803232
   }
 }
