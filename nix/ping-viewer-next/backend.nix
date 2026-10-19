@@ -52,7 +52,6 @@ let
 
     nativeBuildInputs = [
       git
-      perl
     ];
 
     depsBuildBuild = [ buildPackages.stdenv.cc ];

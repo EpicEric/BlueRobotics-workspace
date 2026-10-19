@@ -35,5 +35,6 @@ pkgs.mkShell {
     export __EGL_VENDOR_LIBRARY_FILENAMES="${pkgs.mesa}/share/glvnd/egl_vendor.d/50_mesa.json"
     export GBM_BACKENDS_PATH="${pkgs.mesa}/lib/gbm"
     export LIBGL_DRIVERS_PATH="${pkgs.mesa}/lib/dri"
+    export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
   '';
 }

@@ -1,4 +1,7 @@
 {
+  "$declared": {
+    "now": "git+https://codeberg.org/now-runner/now"
+  },
   "crane": {
     "type": "github",
     "owner": "ipetkov",
@@ -19,8 +22,8 @@
     "type": "git",
     "url": "https://codeberg.org/now-runner/now",
     "ref": "HEAD",
-    "rev": "0a23bb7d7cd4873be9ebca28da5d9dd90f3444e7",
-    "narHash": "sha256-zc4Lm5q7TwU7qC5aKrkZLGJXYB9RSOEJu25y3Kv3ets=",
-    "lastModified": 1791803232
+    "rev": "26caa6add98d75c429d1ee844a83446dc15d9f96",
+    "narHash": "sha256-/3OWSZTJLasTi4WPWPixXwhKDN/UqIVd8mbPgd8Cb5Q=",
+    "lastModified": 1792329833
   }
 }
