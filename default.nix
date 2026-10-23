@@ -1,9 +1,11 @@
 {
   system ? builtins.currentSystem,
   inputs ? import ./.tack,
-  pkgs ? import inputs.nixpkgs { inherit system; },
-  dockerTag ? "nix",
-  dockerTool ? "buildLayeredImage",
+  pkgs ? import inputs.nixpkgs {
+    inherit system;
+    overlays = [ (import inputs.rust-overlay) ];
+  },
+  ...
 }@args:
 {
   ping-viewer = pkgs.callPackage ./nix/ping-viewer/package.nix { };

@@ -1,21 +1,20 @@
 {
   system ? builtins.currentSystem,
   inputs ? import ./.tack,
-  pkgs ? import inputs.nixpkgs { inherit system; },
+  pkgs ? import inputs.nixpkgs {
+    inherit system;
+    overlays = [ (import inputs.rust-overlay) ];
+  },
 }:
 pkgs.mkShell {
   packages = [
     pkgs.bun
-    pkgs.cargo
-    (pkgs.callPackage ./nix/cargo-generate-rpm/package.nix { })
-    pkgs.cargo-tauri
-    pkgs.clippy
     pkgs.lsof
     pkgs.nodejs_24
     (import inputs.now { inherit system; })
     pkgs.parallel
     pkgs.pkg-config
-    pkgs.rustc
+    pkgs.rust-bin.stable.latest.default
     pkgs.shellcheck
     pkgs.uv
     pkgs.wrapGAppsHook4

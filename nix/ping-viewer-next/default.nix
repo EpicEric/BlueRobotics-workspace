@@ -1,7 +1,10 @@
 {
   system ? builtins.currentSystem,
   inputs ? import ../../.tack,
-  pkgs ? import inputs.nixpkgs { inherit system; },
+  pkgs ? import inputs.nixpkgs {
+    inherit system;
+    overlays = [ (import inputs.rust-overlay) ];
+  },
   dockerTag ? "nix",
   dockerTool ? "buildLayeredImage",
   ...

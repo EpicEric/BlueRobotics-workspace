@@ -1,9 +1,10 @@
 {
   lib,
-  rustPlatform,
-  ping-viewer-next-frontend,
-  git,
   fetchFromGitHub,
+  git,
+  ping-viewer-next-frontend,
+  buildPackages,
+  makeRustPlatform,
 }:
 let
   mavlinkDefinitions = fetchFromGitHub {
@@ -18,6 +19,13 @@ let
     fileset = lib.fileset.union (lib.fileset.gitTracked ../../ping-viewer-next) (
       lib.fileset.maybeMissing ../../ping-viewer-next/.git
     );
+  };
+
+  toolchain = buildPackages.rust-bin.stable.latest.default;
+
+  rustPlatform = makeRustPlatform {
+    cargo = toolchain;
+    rustc = toolchain;
   };
 in
 rustPlatform.buildRustPackage {
