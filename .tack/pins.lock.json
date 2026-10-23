@@ -1,7 +1,8 @@
 {
   "$declared": {
     "nixpkgs": "github:NixOS/nixpkgs/nixpkgs-unstable",
-    "now": "git+https://codeberg.org/now-runner/now"
+    "now": "git+https://codeberg.org/now-runner/now",
+    "rust-overlay": "github:oxalica/rust-overlay/master"
   },
   "nixpkgs": {
     "type": "github",
@@ -18,5 +19,13 @@
     "rev": "4a3bc8773c82d0d0438c802a0b8dfd07f8c556ca",
     "narHash": "sha256-cnlsv7HzSW7KEbkWqy7VGd/UPpQKaIEFZsWPzckqTWs=",
     "lastModified": 1792772530
+  },
+  "rust-overlay": {
+    "type": "github",
+    "owner": "oxalica",
+    "repo": "rust-overlay",
+    "rev": "b0829a2cc9f7b596583331d78a942c1e5170d8a0",
+    "narHash": "sha256-M2rr/yPbTHvgAzCyZ+zHJHflFM0XU7t42Sw2skA3TQM=",
+    "lastModified": 1792739799
   }
 }
