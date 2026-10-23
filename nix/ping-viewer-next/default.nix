@@ -12,34 +12,31 @@ let
     ping-viewer-next-frontend = frontend;
   };
   docker = pkgs.callPackage ./docker.nix {
-    ping-viewer-next = backend;
+    ping-viewer-next = backend.overrideAttrs {
+      cargoBuildFeatures = [
+        "embed-frontend"
+        "blueos-extension"
+      ];
+    };
     inherit dockerTag;
   };
 
   mkCross =
     suffix: pkgsCross:
     let
-      craneLib = (import inputs.crane { pkgs = pkgsCross; }).overrideToolchain (
-        _:
-        pkgsCross.pkgsBuildHost.symlinkJoin {
-          name = "rust-toolchain";
-          paths = with pkgsCross.pkgsBuildHost; [
-            cargo
-            rustc
-            clippy
-            rustfmt
-          ];
-        }
-      );
       backendCross = pkgsCross.callPackage ./backend.nix {
-        inherit craneLib;
         ping-viewer-next-frontend = frontend;
       };
     in
     {
       "backend-${suffix}" = backendCross;
       "docker-${suffix}" = pkgsCross.callPackage ./docker.nix {
-        ping-viewer-next = backendCross;
+        ping-viewer-next = backendCross.overrideAttrs {
+          cargoBuildFeatures = [
+            "embed-frontend"
+            "blueos-extension"
+          ];
+        };
         inherit dockerTag dockerTool;
       };
     };

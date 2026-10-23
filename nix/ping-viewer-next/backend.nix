@@ -1,11 +1,7 @@
 {
   lib,
-  stdenv,
-  buildPackages,
-  runCommandLocal,
-  craneLib,
+  rustPlatform,
   ping-viewer-next-frontend,
-  perl,
   git,
   fetchFromGitHub,
 }:
@@ -23,55 +19,26 @@ let
       lib.fileset.maybeMissing ../../ping-viewer-next/.git
     );
   };
-
-  rustTarget = stdenv.hostPlatform.rust.rustcTarget;
-  rustTargetEnv = lib.toUpper (lib.replaceStrings [ "-" ] [ "_" ] rustTarget);
-
-  cargoVendorDir = craneLib.vendorCargoDeps {
-    inherit src;
-    overrideVendorCargoPackage =
-      pkg: drv:
-      if pkg.name == "mavlink" && pkg.version == "0.16.2" then
-        runCommandLocal "vendor-mavlink-0.16.2" { } ''
-          cp -R ${drv} $out
-          chmod -R u+w $out
-          rm -rf $out/mavlink
-          cp -R ${mavlinkDefinitions} $out/mavlink
-          chmod -R u+w $out/mavlink
-        ''
-      else
-        drv;
-  };
-
-  commonArgs = {
-    inherit src cargoVendorDir;
-    strictDeps = true;
-
-    cargoExtraArgs = "--features embed-frontend,blueos-extension";
-    doCheck = false;
-
-    nativeBuildInputs = [
-      git
-    ];
-
-    depsBuildBuild = [ buildPackages.stdenv.cc ];
-
-    CARGO_BUILD_TARGET = rustTarget;
-    "CARGO_TARGET_${rustTargetEnv}_LINKER" = "${stdenv.cc.targetPrefix}cc";
-    HOST_CC = "${buildPackages.stdenv.cc.targetPrefix}cc";
-  };
-
-  cargoArtifacts = craneLib.buildDepsOnly commonArgs;
 in
-craneLib.buildPackage (
-  commonArgs
-  // {
-    inherit cargoArtifacts;
+rustPlatform.buildRustPackage {
+  pname = "ping-viewer-next";
+  inherit ((lib.importTOML ../../ping-viewer-next/Cargo.toml).package) version;
 
-    postPatch = ''
-      ln -s ${ping-viewer-next-frontend}/share/ping-viewer-next-frontend ping-viewer-next-frontend/dist
-    '';
+  inherit src;
+  cargoLock.lockFile = ../../ping-viewer-next/Cargo.lock;
 
-    meta.mainProgram = "ping-viewer-next";
-  }
-)
+  postPatch = ''
+    rm -rf "$cargoDepsCopy/mavlink-0.16.2/mavlink"
+    cp -R ${mavlinkDefinitions} "$cargoDepsCopy/mavlink-0.16.2/mavlink"
+    chmod -R u+w "$cargoDepsCopy/mavlink-0.16.2/mavlink"
+
+    ln -s ${ping-viewer-next-frontend}/share/ping-viewer-next-frontend ping-viewer-next-frontend/dist
+  '';
+
+  nativeBuildInputs = [ git ];
+  cargoBuildFeatures = [ "embed-frontend" ];
+
+  doCheck = false;
+
+  meta.mainProgram = "ping-viewer-next";
+}

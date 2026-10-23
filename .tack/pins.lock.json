@@ -1,29 +1,22 @@
 {
   "$declared": {
+    "nixpkgs": "github:NixOS/nixpkgs/nixpkgs-unstable",
     "now": "git+https://codeberg.org/now-runner/now"
-  },
-  "crane": {
-    "type": "github",
-    "owner": "ipetkov",
-    "repo": "crane",
-    "rev": "47b6b27ed9a3a9181415e4367d0c30ab2a0e0250",
-    "narHash": "sha256-THGtz65UGJU+sonZidRboyCMk+9DclpMF7pwL4uDV4M=",
-    "lastModified": 1790899423
   },
   "nixpkgs": {
     "type": "github",
     "owner": "NixOS",
     "repo": "nixpkgs",
-    "rev": "aa48d347080940b8a2b8d2f48228674e280a3514",
-    "narHash": "sha256-i8KuaINOYLvB2oQikGvtRmdZRxATRxsI9Yad2pp7dEA=",
-    "lastModified": 1791191277
+    "rev": "5adc50831c259f87faeb09ddf930d43597197473",
+    "narHash": "sha256-Q/8KLB6jNfpaUN1HAedE/u/Et9feE/zYSsutBLKrCFk=",
+    "lastModified": 1792506237
   },
   "now": {
     "type": "git",
     "url": "https://codeberg.org/now-runner/now",
     "ref": "HEAD",
-    "rev": "26caa6add98d75c429d1ee844a83446dc15d9f96",
-    "narHash": "sha256-/3OWSZTJLasTi4WPWPixXwhKDN/UqIVd8mbPgd8Cb5Q=",
-    "lastModified": 1792329833
+    "rev": "4a3bc8773c82d0d0438c802a0b8dfd07f8c556ca",
+    "narHash": "sha256-cnlsv7HzSW7KEbkWqy7VGd/UPpQKaIEFZsWPzckqTWs=",
+    "lastModified": 1792772530
   }
 }
