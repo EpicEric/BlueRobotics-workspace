@@ -1,9 +1,9 @@
 [inputs.nixpkgs]
-url = "github:NixOS/nixpkgs/nixpkgs-unstable"
+url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst"
 type = "fetch"
 
 [inputs.now]
-url = "git+https://codeberg.org/now-runner/now"
+url = "git+https://codeberg.org/now-runner/now.git?shallow=1"
 type = "fetch"
 
 [inputs.rust-overlay]

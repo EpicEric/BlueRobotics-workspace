@@ -1,31 +1,30 @@
 {
   "$declared": {
-    "nixpkgs": "github:NixOS/nixpkgs/nixpkgs-unstable",
-    "now": "git+https://codeberg.org/now-runner/now",
+    "nixpkgs": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst",
+    "now": "git+https://codeberg.org/now-runner/now.git?shallow=1",
     "rust-overlay": "github:oxalica/rust-overlay/master"
   },
   "nixpkgs": {
-    "type": "github",
-    "owner": "NixOS",
-    "repo": "nixpkgs",
-    "rev": "5adc50831c259f87faeb09ddf930d43597197473",
-    "narHash": "sha256-Q/8KLB6jNfpaUN1HAedE/u/Et9feE/zYSsutBLKrCFk=",
-    "lastModified": 1792506237
+    "type": "tarball",
+    "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1104102.e62746b0b472/nixexprs.tar.zst?rev=e62746b0b472753ef019baceab6f1e2e52014980&lastModified=1793225069",
+    "rev": "e62746b0b472753ef019baceab6f1e2e52014980",
+    "narHash": "sha256-GYpArmwi/iMuX2ov31oCBhAXRMJdNX9kOl2LZHCuR6M=",
+    "lastModified": 1793225069
   },
   "now": {
     "type": "git",
-    "url": "https://codeberg.org/now-runner/now",
+    "url": "https://codeberg.org/now-runner/now.git",
     "ref": "HEAD",
-    "rev": "4a3bc8773c82d0d0438c802a0b8dfd07f8c556ca",
-    "narHash": "sha256-cnlsv7HzSW7KEbkWqy7VGd/UPpQKaIEFZsWPzckqTWs=",
-    "lastModified": 1792772530
+    "rev": "a1c3f4cebff745f52689d46c353803d4fa008f51",
+    "narHash": "sha256-J8/7WI3ggWb7+lQGD0gbfMqD4cxS8QUmOjD9YIfvVL8=",
+    "lastModified": 1793265929
   },
   "rust-overlay": {
     "type": "github",
     "owner": "oxalica",
     "repo": "rust-overlay",
-    "rev": "b0829a2cc9f7b596583331d78a942c1e5170d8a0",
-    "narHash": "sha256-M2rr/yPbTHvgAzCyZ+zHJHflFM0XU7t42Sw2skA3TQM=",
-    "lastModified": 1792739799
+    "rev": "afcefd09c71e63663a46e4ce5e09968584f2c709",
+    "narHash": "sha256-fAvtOccUXHVAH5wXK+ABYUUC47W2qTb9T9EefLcS9ME=",
+    "lastModified": 1793261817
   }
 }
