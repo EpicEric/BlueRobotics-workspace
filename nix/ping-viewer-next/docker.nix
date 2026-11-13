@@ -16,7 +16,7 @@ let
       echo "Starting ping viewer..."
       mkdir -p /app/logs /app/recordings
       chmod -R 755 /app/logs /app/recordings
-      chown -R 1000:1000 /app/logs /app/recordings
+      chown -R 1000:1000 /app/logs /app/recordings /app/settings
       exec ${lib.getExe su-exec} 1000:1000 \
         ${lib.getExe ping-viewer-next} --enable-auto-create --rest-server 0.0.0.0:6060
     '';
